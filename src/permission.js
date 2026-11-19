@@ -1,6 +1,9 @@
 import router from './router'
 import { getToken } from './utils/auth'
 import useUserStore from './stores/modules/user'
+import { isHttp, isPathMatch } from './utils/validate'
+import userPermissionStore from './stores/modules/permission'
+import { ElMessage } from 'element-plus'
 //白名单
 const whiteList = ['/login', '/register']
 
@@ -18,26 +21,29 @@ router.beforeEach(async (to, from) => {
       return true
     }
     if (useUserStore().roles.length === 0) {
-      //加载用户信息和路由
-      await useUserStore().getInfo()
-
-      const accessRoutes = await userPermissionStore().generateRoutes()
-      accessRoutes.forEach(route => {
-        if(!isHttp(route.path)){
+      try {
+        //加载用户信息和路由
+        await useUserStore().getInfo()
+        const accessRoutes = await userPermissionStore().generateRoutes()
+        console.dir(accessRoutes)
+        accessRoutes.forEach((route) => {
+          if (!isHttp(route.path)) {
             router.addRoute(route)
-        }
-      })
-      return {...to,replace:true}
-    }catch(err){
+          }
+        })
+        return { ...to, replace: true }
+      } catch (err) {
         await useUserStore().logOut()
         ElMessage.error(err)
-        return {path:'/'}
+        console.dir(err)
+        return { path: '/' }
+      }
     }
     return true
-  }else{
+  } else {
     //没有token
-    if(isWhiteList(to.path)){
-        return true
+    if (isWhiteList(to.path)) {
+      return true
     }
     //否则全部重定向到登录页
     return `/login?redirect=${to.fullPath}`

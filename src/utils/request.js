@@ -27,7 +27,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (res) => {
     const code = res.data.code || 200
-    const msg = res.data.data.message
+    const msg = res.data.msg
     if (code !== 200) {
       ElMessage({ message: msg, type: 'error' })
       return Promise.reject(new Error(message))

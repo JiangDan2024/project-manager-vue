@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export const getRouters = () => {
   return request({
-    url: '/getRoute',
+    url: '/sys/auth/getRoute',
     method: 'get',
   })
 }

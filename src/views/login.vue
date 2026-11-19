@@ -88,7 +88,7 @@ const loginRules = {
 const codeUrl = ref('')
 const loading = ref(false)
 // 注册开关
-const register = ref(false)
+const register = ref(true)
 const redirect = ref(undefined)
 const otherQueryParams = ref({})
 

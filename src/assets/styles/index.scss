@@ -1,0 +1,42 @@
+// 引入其他组件的样式
+@use './sidebar.scss';
+@use './element-ui.scss';
+/* 去除浏览器默认的内外边距 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 让 html 和 body 占满全屏高度 */
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 防止出现多余的滚动条 */
+}
+
+/* 超链接全局样式 */
+.link-type,
+.link-type:focus {
+  color: #337ab7;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(32, 160, 255);
+  }
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}

@@ -1,12 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Layout from '@/layout/index.vue'
 
-import IndexView from '@/views/index.vue'
-
-const routes = [
+//公共路由
+export const constantRoutes = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: ':path(.*)',
+        component: () => import('@/views/redirect/index.vue'),
+      },
+    ],
+  },
   {
     path: '/',
-    component: IndexView,
+    component: Layout,
+    redirect: '/index',
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/index.vue'),
+        meta: { title: '首页', icon: 'dashboard', affix: true },
+      },
+    ],
   },
+  // {
+  //   path: '/',
+  //   component: IndexView,
+  // },
   {
     path: '/login',
     component: () => import('@/views/login.vue'),
@@ -19,9 +43,38 @@ const routes = [
   },
 ]
 
+//动态路由
+export const dynamicRoutes = [
+  {
+    // path: '',
+    // component: Layout,
+    // hidden: true,
+    // permissions: [],
+    // children: [
+    //   {
+    //     path: '',
+    //     component: () => import('@/views'),
+    //     name: '',
+    //     meta: {
+    //       title: '',
+    //       activeMenu: '',
+    //     },
+    //   },
+    // ],
+  },
+]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes: constantRoutes,
+  //记录浏览器滚动位置，满足条件时自动滚动到记忆位置
+  scrollBehavior(to, from, savedPosition) {
+    // ...
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { top: '' }
+  },
 })
 
 export default router

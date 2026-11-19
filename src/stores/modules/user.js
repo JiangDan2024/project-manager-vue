@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
-import { login, getInfo } from '@/api/login'
+import { login, getInfo, logOut } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { isHttp, isEmpty } from '@/utils/validate'
+import defAva from '@/assets/images/def.png'
+
 const useUserStore = defineStore('user', {
   state: () => ({
     token: getToken(),
@@ -50,6 +53,22 @@ const useUserStore = defineStore('user', {
           })
           .catch((err) => {
             reject(err)
+          })
+      })
+    },
+    //退出登录
+    logOut() {
+      return new Promise((resolve, reject) => {
+        logOut()
+          .then(() => {
+            this.token = ''
+            this.roles = []
+            this.permissions = []
+            removeToken()
+            resolve()
+          })
+          .catch((error) => {
+            reject(error)
           })
       })
     },

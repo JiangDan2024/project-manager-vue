@@ -25,7 +25,14 @@ export function login(data) {
 
 export function getInfo() {
   return request({
-    url: '',
+    url: '/sys/auth/getInfo',
     method: 'get',
+  })
+}
+
+export function logOut() {
+  return request({
+    url: '/sys/auth/logout',
+    method: 'put',
   })
 }

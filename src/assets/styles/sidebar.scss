@@ -1,0 +1,58 @@
+@use './variables.module.scss' as vars;
+
+#app {
+  .main-container {
+    min-height: 100%;
+    transition: margin-left 0.28s;
+    margin-left: vars.$base-sidebar-width;
+    position: relative;
+  }
+  .sidebar-container {
+    transition: width 0.28s;
+    width: vars.$base-sidebar-width !important;
+    height: 100%;
+    position: fixed;
+    font-size: 0px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1001;
+    overflow: hidden;
+    background-color: #545c64;
+
+    // 避免展开侧边栏时闪烁
+    .menu-title {
+      white-space: nowrap;
+    }
+
+    .el-menu {
+      border: none;
+    }
+  }
+
+  .hideSidebar {
+    .sidebar-container {
+      width: 54px !important;
+    }
+    .main-container {
+      margin-left: 54px !important;
+    }
+    .el-sub-menu {
+      overflow: hidden;
+
+      .svg-icon {
+        margin-left: 20px;
+      }
+    }
+    /* 隐藏文字 */
+    .menu-title {
+      width: 0;
+      height: 0;
+      visibility: hidden;
+    }
+    /* 隐藏折叠状态下的子菜单箭头 */
+    .el-sub-menu__icon-arrow {
+      display: none;
+    }
+  }
+}
